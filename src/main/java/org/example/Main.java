@@ -12,8 +12,8 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        // learnDates();
-        // learnTimeZones();
+        learnDates();
+        learnTimeZones();
         learnStreams();
     }
 
@@ -47,6 +47,41 @@ public class Main {
                                     .collect(Collectors.toList());
         list3.forEach(System.out::println);
 
+        //    generating a map
+        // generate person list
+        List<Person> personList = generatePersonsList();
+        // personList.forEach(System.out::println);
+
+        // we sorted on the age then inserted the elements to map
+        // we grouped by names and converted to list and stored as value
+        System.out.println("Values grouped by names: " + personList.stream()
+                                                                   .sorted((p1, p2) -> p1.age - p2.age)
+                                                                   .collect(Collectors.groupingBy(Person::getName,
+                                                                           Collectors.toList()
+                                                                   )));
+
+        System.out.println("Even aged persons: " + personList.stream()
+                                                             .sorted((p1, p2) -> p1.age - p2.age)
+                                                             .filter((person) -> person.age % 2 == 0)
+                                                             .collect(Collectors.groupingBy(Person::getName,
+                                                                     Collectors.toList()
+                                                             )));
+
+
+    }
+
+    private static List<Person> generatePersonsList() {
+        return Arrays.asList(
+                new Person("Ketan", Gender.MALE, 26),
+                new Person("Amy", Gender.FEMALE, 17),
+                new Person("Ei", Gender.FEMALE, 24),
+                new Person("Jhon Lee", Gender.MALE, 150),
+                new Person("Ei", Gender.FEMALE, 27),
+                new Person("Ei", Gender.FEMALE, 30),
+                new Person("Jhon Lee", Gender.MALE, 30),
+                new Person("Jhon Lee", Gender.MALE, 25),
+                new Person("Jhon Lee", Gender.MALE, 55)
+        );
     }
 
     private static void learnTimeZones() {
@@ -81,3 +116,52 @@ public class Main {
     }
 
 }
+
+class Person {
+    String name;
+    Integer age;
+    Gender gender;
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+
+    Person(String name, Gender gender, Integer age) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return this.name + "-" + this.gender + "-" + this.age;
+    }
+}
+
+enum Gender {
+    MALE,
+    FEMALE
+
+
+};

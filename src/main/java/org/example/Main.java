@@ -1,5 +1,9 @@
 package org.example;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -12,9 +16,38 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        learnDates();
-        learnTimeZones();
-        learnStreams();
+        // learnDates();
+        // learnTimeZones();
+        // learnStreams();
+        learnFiles();
+    }
+
+    private static void learnFiles() {
+
+        // System.getProperties()
+        //       .stringPropertyNames()
+        //       .stream()
+        //       .sorted(String::compareTo)
+        //       .forEach(property -> System.out.println(property + ": " + System.getProperty(property)));
+
+        // print the current directory name
+        System.out.println(System.getProperty("user.dir"));
+        String baseDir = System.getProperty("user.dir");
+        Path basePath = Paths.get(baseDir);
+        System.out.println((Files.isDirectory(basePath)));
+        try {
+            // create new directory if not exists
+            Path newDir = Paths.get(baseDir, "res");
+            if (!Files.exists(newDir)) {
+                Files.createDirectory(newDir);
+                System.out.println("Directory created");
+
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        // Files.createDirectory()
+
     }
 
     private static void learnStreams() {
